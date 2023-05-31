@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Usuario;
+use App\Models\Estudiante;
 use Illuminate\Http\Request;
 
-class UsuarioController extends Controller
+class EstudianteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class UsuarioController extends Controller
     public function index()
     {
         //Metodo estatico porque no hay que crear instancia de un objeto
-        $usuarios = Usuario::all();
+        $estudiantes = Estudiante::all();
         $data = json_encode(([
-            "data" => $usuarios
+            "data" => $estudiantes
         ]));
             //json_encode sirve para convertir data en un objeto
         return response($data, 200);
@@ -32,13 +32,13 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        $usuario = new Usuario();
-        $usuario->name = $request->input('name');
-        $usuario->username = $request->input('username');
-        $usuario->password = $request->input('password');
-        $usuario->save();
+        $estudiante = new Estudiante();
+        $estudiante->codigo = $request->input('codigo');
+        $estudiante->nombres = $request->input('nombres');
+        $estudiante->apellidos = $request->input('apellidos');
+        $estudiante->save();
         return response(json_encode([
-            "data"=>"Usuario registrado"
+            "data"=>"Estudiante registrado"
         ]));
     }
 
@@ -48,11 +48,11 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($codigo)
     {
-        $usuario = Usuario::find($id);
+        $estudiante = Estudiante::find($codigo);
         return response(json_encode([
-            "data"=> $usuario
+            "data"=> $estudiante
         ]));
     }
 
@@ -63,15 +63,15 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $codigo)
     {
-        $usuario = Usuario::find($id);
-        $usuario->name = $request->input('name');
-        $usuario->username = $request->input('username');
-        $usuario->password = $request->input('password');
-        $usuario->save();
+        $estudiante = Estudiante::find($codigo);
+        $estudiante->codigo = $request->input('codigo');
+        $estudiante->nombres = $request->input('nombres');
+        $estudiante->apellidos = $request->input('apellidos');
+        $estudiante->save();
         return response(json_encode([
-            "data"=> "Registro actualizado"
+            "data"=> "Estudiante actualizado"
         ]));
     }
 
@@ -81,17 +81,17 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($codigo)
     {
-        $usuario = Usuario::find($id);
-        if(empty($usuario)){
+        $estudiante = Estudiante::find($codigo);
+        if(empty($estudiante)){
             return response(json_encode([
-                "data"=> "El usuario no existe"
+                "data"=> "El estudiante no existe"
             ]),404);
         }
-        $usuario->delete();
+        $estudiante->delete();
         return response(json_encode([
-            "data"=> "Registro eliminado"
+            "data"=> "Estudiante eliminado"
         ]));
     }
 }
