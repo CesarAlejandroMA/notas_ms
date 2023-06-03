@@ -18,8 +18,16 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->get('estudiantes', 'EstudianteController@index');
-$router->get('estudiantes/{codigo}', 'EstudianteController@show');
-$router->post('estudiantes', 'EstudianteController@store');
-$router->put('estudiantes/{codigo}', 'EstudianteController@update');
-$router->delete('estudiantes/{codigo}', 'EstudianteController@destroy');
+//METODOS PARA ESTUDIANTE
+$router->get('verEstudiantes', 'EstudianteController@index');
+$router->get('mostrarEstudiante/{codigo}', 'EstudianteController@show');
+$router->post('crearEstudiantes', 'EstudianteController@store');
+$router->put('modificarEstudiantes/{codigo}', 'EstudianteController@update');
+$router->delete('eliminarEstudiantes/{codigo}', 'EstudianteController@destroy');
+
+//METODOS PARA ACTIVIDADES
+$router->get('verActividad/{codigoEstudiante}', 'ActividadController@index');
+$router->get('mostrarActividad/{id}', 'ActividadController@show');
+$router->post('crearActividad', 'ActividadController@store');
+$router->put('modificarActividad/{id}', 'ActividadController@update');
+$router->delete('eliminarActividad/{id}', 'ActividadController@destroy');

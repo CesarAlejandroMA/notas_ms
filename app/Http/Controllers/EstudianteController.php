@@ -45,7 +45,7 @@ class EstudianteController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $codigo
      * @return \Illuminate\Http\Response
      */
     public function show($codigo)
@@ -60,13 +60,20 @@ class EstudianteController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $codigo
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, $codigo)
     {
-        $estudiante = Estudiante::find($codigo);
-        $estudiante->codigo = $request->input('codigo');
+
+        $estudiante = Estudiante::where('codigo', $codigo)->first();
+        if(!$estudiante){
+            return response(json_decode([
+                "error" => "Estudiante no encontrado"
+            ]));
+        }
+
         $estudiante->nombres = $request->input('nombres');
         $estudiante->apellidos = $request->input('apellidos');
         $estudiante->save();
@@ -75,10 +82,11 @@ class EstudianteController extends Controller
         ]));
     }
 
+
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $codigo
      * @return \Illuminate\Http\Response
      */
     public function destroy($codigo)
